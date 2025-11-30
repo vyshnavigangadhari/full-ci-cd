@@ -31,15 +31,6 @@ pipeline {
       }
     }
 
-    stage('Start Minikube') {
-      steps {
-        echo "Starting Minikube (if not already running)..."
-        bat '''
-        minikube status || minikube start
-        '''
-      }
-    }
-
     stage('Deploy to Kubernetes') {
       steps {
         echo "Deploying application to Kubernetes..."
@@ -56,7 +47,7 @@ pipeline {
   post {
     success {
       echo "✅ Image pushed to Docker Hub: ${env.DOCKER_HUB_REPO}:${env.IMAGE_TAG}"
-      echo "✅ Deployed to Kubernetes via Minikube (deployment.yaml + service.yaml)."
+      echo "✅ Deployed to Kubernetes using existing Minikube cluster."
     }
   }
 }
